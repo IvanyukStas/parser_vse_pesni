@@ -1,7 +1,14 @@
 import csv
+from urllib.parse import urlparse
 import requests
 from bs4 import BeautifulSoup
 import config
+
+
+
+def get_netloc_from_url(url) -> str:
+    parsed_url= urlparse(url)
+    return parsed_url.netloc
 
 
 def open_input_file()->list:
@@ -20,13 +27,13 @@ def get_soup(url):
     return soup
 
 
-def find_artist(soup)-> str:
-    category = soup.find_all('span', itemprop=config.artist_teg)
+def find_artist(soup, artist_tag)-> str:
+    category = soup.find_all('span', itemprop=artist_tag)
     category = category[2].text
     return category
 
-def find_song_name(soup)->str:
-    title = soup.find_all('span', class_=config.song_name_teg)
+def find_song_name(soup, song_name_tag)->str:
+    title = soup.find_all('span', class_=song_name_tag)
     title = title[0].text
     return title
 

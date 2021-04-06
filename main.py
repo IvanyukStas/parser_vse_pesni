@@ -1,4 +1,6 @@
-from parser_vse_pesni import open_input_file, get_soup, find_artist, find_song_text,find_song_name, record_to_csv
+from config import site
+from parser_vse_pesni import open_input_file, get_soup, find_artist, find_song_text, find_song_name, record_to_csv, \
+    get_netloc_from_url
 
 '''
  Парсер исполнителю названия песни и текста песни
@@ -11,9 +13,11 @@ if __name__ == '__main__':
     for url in urls:
         soup = get_soup(url)
         data = []
-        category = find_artist(soup)
+        artist_tag = site[get_netloc_from_url(url)]['artist_tag']
+        category = find_artist(soup, artist_tag)
         data.append(category)
-        title = find_song_name(soup)
+        song_name_tag = site[get_netloc_from_url(url)]['song_name_tag']
+        title = find_song_name(soup, song_name_tag)
         data.append(title)
         text_song = find_song_text(soup)
         data.append(text_song)
