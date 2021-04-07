@@ -27,7 +27,7 @@ def get_soup(url):
     return soup
 
 
-def find_artist(soup, artist_tag)-> str:
+def find_artist(soup, artist_tag) -> str:
     category = soup.find_all('span', itemprop=artist_tag)
     category = category[2].text
     return category
